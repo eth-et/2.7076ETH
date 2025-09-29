@@ -3,21 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Entrusted Transaction - Blockscout Style</title>
+  <title>Entrusted Transaction - Styled</title>
   <style>
-    body { font-family: Arial, sans-serif; margin:0; background:#fff; color:#000; }
+    body { font-family: Arial, sans-serif; margin:0; background:#f6f8fa; color:#000; }
     header { background:#d21f2c; padding:20px; color:#fff; display:flex; align-items:center; }
     header img { height:30px; margin-right:10px; }
     header h1 { font-size:22px; margin:0; }
     main { padding:20px; }
-    h2 { font-size:18px; color:#0044cc; margin-top:25px; margin-bottom:10px; }
-    .row { margin:5px 0; word-break:break-all; }
-    .label { font-weight:bold; }
-    .btn { padding:5px 10px; border:none; border-radius:4px; cursor:pointer; font-size:14px; }
+    h2 { font-size:18px; color:#0044cc; margin:20px 0 10px; }
+    .card { background:#fff; padding:15px; border-radius:12px; box-shadow:0 2px 5px rgba(0,0,0,0.08); margin-bottom:20px; }
+    .row { margin:6px 0; word-break:break-all; font-size:14px; }
+    .label { font-weight:bold; margin-right:5px; }
+    .btn { padding:6px 12px; border:none; border-radius:6px; cursor:pointer; font-size:14px; margin-top:10px; }
     .copy { background:#007bff; color:#fff; margin-right:8px; }
     .confirm { background:#28a745; color:#fff; }
     .success-message { display:none; margin-top:10px; padding:8px; background:#d4edda; color:#155724; border:1px solid #c3e6cb; border-radius:4px; }
-    footer { margin-top:40px; padding:15px; font-size:13px; color:#555; border-top:1px solid #ddd; }
+    footer { margin-top:40px; padding:15px; font-size:13px; color:#555; border-top:1px solid #ddd; text-align:center; }
     footer a { color:#0044cc; text-decoration:none; }
   </style>
 </head>
@@ -31,36 +32,46 @@
     Please review the transaction information carefully before confirming payment of hosting fees.</p>
 
     <h2>Transaction</h2>
-    <div class="row"><span class="label">Hash:</span> 0x58f06295e9cb7286ad671992b1000acfd0f3f38310c7e1f309771c861c234775</div>
-    <div class="row"><span class="label">Status:</span> Success</div>
-    <div class="row"><span class="label">Method:</span> createEscrow</div>
+    <div class="card">
+      <div class="row"><span class="label">Hash:</span> 0x58f06295e9cb7286ad671992b1000acfd0f3f38310c7e1f309771c861c234775</div>
+      <div class="row"><span class="label">Status:</span> ✅ Success</div>
+      <div class="row"><span class="label">Method:</span> createEscrow</div>
+    </div>
 
     <h2>Block Information</h2>
-    <div class="row"><span class="label">Block:</span> 23470072</div>
-    <div class="row"><span class="label">Confirmations:</span> 28</div>
-    <div class="row"><span class="label">Timestamp:</span> 2025-09-30 01:14:35 (UTC+08:00)</div>
-    <div class="row"><span class="label">Confirmation Speed:</span> ≤ 12.121 secs</div>
+    <div class="card">
+      <div class="row"><span class="label">Block:</span> 23470072</div>
+      <div class="row"><span class="label">Confirmations:</span> 28</div>
+      <div class="row"><span class="label">Timestamp:</span> 2025-09-30 01:14:35 (UTC+08:00)</div>
+      <div class="row"><span class="label">Confirmation Speed:</span> ≤ 12.121 secs</div>
+    </div>
 
     <h2>Parties Involved</h2>
-    <div class="row"><span class="label">From:</span> 0x4FA2CCd81c656d198e8cB96F2320c89cf708A8C9</div>
-    <div class="row"><span class="label">To (contract call):</span> 0xce1a5975a1b14d99c4693ca1682317097f7eaaf0</div>
-    <div class="row"><span class="label">Contract:</span> LocalCoinSwapEthereumEscrow</div>
+    <div class="card">
+      <div class="row"><span class="label">From:</span> 0x4FA2CCd81c656d198e8cB96F2320c89cf708A8C9</div>
+      <div class="row"><span class="label">To (contract call):</span> 0xce1a5975a1b14d99c4693ca1682317097f7eaaf0</div>
+      <div class="row"><span class="label">Contract:</span> LocalCoinSwapEthereumEscrow</div>
+    </div>
 
     <h2>Transaction Value</h2>
-    <div class="row"><span class="label">Amount:</span> 2.7076 ETH (~$11,193.02)</div>
-    <div class="row"><span class="label">Hosting Fees:</span> 0.08 ETH</div>
-    <div class="row"><span class="label">Contract Payment Address:</span> 
-      <span id="paymentAddress">0x76142ED66109F23F0147e6996984E4FaFBEb3eB5</span>
+    <div class="card">
+      <div class="row"><span class="label">Amount:</span> 2.7076 ETH (~$11,193.02)</div>
+      <div class="row"><span class="label">Hosting Fees:</span> 0.08 ETH</div>
+      <div class="row"><span class="label">Contract Payment Address:</span> 
+        <span id="paymentAddress">0x76142ED66109F23F0147e6996984E4FaFBEb3eB5</span>
+      </div>
+      <button class="btn copy" onclick="copyAddress()">Copy Address</button>
+      <button class="btn confirm" onclick="confirmPayment()">Confirm Payment</button>
+      <div id="successMessage" class="success-message">✅ Payment confirmed. This page will close shortly...</div>
     </div>
-    <button class="btn copy" onclick="copyAddress()">Copy Address</button>
-    <button class="btn confirm" onclick="confirmPayment()">Confirm Payment</button>
-    <div id="successMessage" class="success-message">Payment confirmed. Thank you!</div>
 
     <h2>Gas Details</h2>
-    <div class="row"><span class="label">Gas Used:</span> 54,820 / 120,000 (45.68%)</div>
-    <div class="row"><span class="label">Transaction Fee:</span> 0.09826516985 ETH (~$406.34)</div>
-    <div class="row"><span class="label">Gas Price:</span> 5.241863987 Gwei</div>
-    <div class="row"><span class="label">Base Fee:</span> 4.32621977 Gwei</div>
+    <div class="card">
+      <div class="row"><span class="label">Gas Used:</span> 54,820 / 120,000 (45.68%)</div>
+      <div class="row"><span class="label">Transaction Fee:</span> 0.09826516985 ETH (~$406.34)</div>
+      <div class="row"><span class="label">Gas Price:</span> 5.241863987 Gwei</div>
+      <div class="row"><span class="label">Base Fee:</span> 4.32621977 Gwei</div>
+    </div>
   </main>
 
   <footer>
