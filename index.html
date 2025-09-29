@@ -1,158 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Entrusted Transaction Details</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f7f8fa;
-      margin: 0;
-      padding: 20px;
-      color: #333;
-    }
-    .container {
-      max-width: 900px;
-      margin: auto;
-    }
-    .card {
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      padding: 20px;
-      margin-bottom: 20px;
-    }
-    .card h2 {
-      margin-top: 0;
-      color: #2c3e50;
-    }
-    .info-row {
-      display: flex;
-      justify-content: space-between;
-      padding: 6px 0;
-      border-bottom: 1px solid #eee;
-    }
-    .info-row:last-child {
-      border-bottom: none;
-    }
-    .label {
-      font-weight: bold;
-      color: #444;
-    }
-    .value {
-      font-family: monospace;
-      color: #000;
-    }
-    .success {
-      color: #27ae60;
-      font-weight: bold;
-    }
-    .pay-box {
-      background: #f1f9f6;
-      border: 1px solid #ccebdd;
-      border-radius: 12px;
-      padding: 20px;
-      text-align: center;
-    }
-    .pay-address {
-      font-family: monospace;
-      font-size: 14px;
-      margin: 10px 0;
-      padding: 10px;
-      background: #fff;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      display: inline-block;
-    }
-    .btn {
-      padding: 8px 14px;
-      margin-top: 10px;
-      border: none;
-      border-radius: 6px;
-      background: #27ae60;
-      color: #fff;
-      cursor: pointer;
-      font-size: 14px;
-    }
-    .btn:hover {
-      background: #219150;
-    }
-    .payment-success {
-      display: none;
-      background: #d4edda;
-      color: #155724;
-      border: 1px solid #c3e6cb;
-      padding: 15px;
-      margin-top: 15px;
-      border-radius: 8px;
-      text-align: center;
-      font-weight: bold;
-    }
+    body { font-family: Arial, sans-serif; background:#f9f9f9; margin:20px; }
+    .card { background:#fff; padding:20px; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.1); margin-bottom:20px; }
+    h1 { font-size:24px; color:#333; }
+    h2 { font-size:20px; margin-top:20px; color:#444; }
+    .row { margin:8px 0; word-break:break-all; }
+    .label { font-weight:bold; color:#555; }
+    .value { margin-left:10px; color:#000; display:inline-block; max-width:100%; word-break:break-all; }
+    .btn { padding:10px 15px; border:none; border-radius:6px; cursor:pointer; margin-top:10px; }
+    .copy { background:#007bff; color:#fff; }
+    .confirm { background:#28a745; color:#fff; }
+    .success-message { display:none; margin-top:15px; padding:10px; background:#d4edda; color:#155724; border:1px solid #c3e6cb; border-radius:6px; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="card">
-      <h2>Entrusted Transaction</h2>
-      <div class="info-row"><div class="label">Tx Hash:</div><div class="value">0x58f06295e9cb7286ad671992b1000acfd0f3f38310c7e1f309771c861c234775</div></div>
-      <div class="info-row"><div class="label">Status:</div><div class="value success">Success</div></div>
-      <div class="info-row"><div class="label">Method:</div><div class="value">createEscrow</div></div>
-    </div>
+  <!-- 顶部说明 -->
+  <div class="card">
+    <h1>Entrusted Transaction</h1>
+    <p>
+      This page provides details of an entrusted transaction executed on the Ethereum blockchain.  
+      Please review the transaction information carefully before confirming payment of hosting fees.
+    </p>
+  </div>
 
-    <div class="card">
-      <h2>Block Information</h2>
-      <div class="info-row"><div class="label">Block:</div><div class="value">23470072</div></div>
-      <div class="info-row"><div class="label">Confirmations:</div><div class="value">28</div></div>
-      <div class="info-row"><div class="label">Timestamp:</div><div class="value">2025-09-30 01:14:35 (UTC+08:00)</div></div>
-      <div class="info-row"><div class="label">Confirmation Speed:</div><div class="value">≤ 12.121 secs</div></div>
-    </div>
+  <!-- 基本交易信息 -->
+  <div class="card">
+    <h2>Transaction</h2>
+    <div class="row"><span class="label">Hash:</span> <span class="value">0x58f06295e9cb7286ad671992b1000acfd0f3f38310c7e1f309771c861c234775</span></div>
+    <div class="row"><span class="label">Status:</span> <span class="value">Success</span></div>
+    <div class="row"><span class="label">Method:</span> <span class="value">createEscrow</span></div>
+  </div>
 
-    <div class="card">
-      <h2>Parties Involved</h2>
-      <div class="info-row"><div class="label">From:</div><div class="value">0x4FA2CCd81c656d198e8cB96F2320c89cf708A8C9</div></div>
-      <div class="info-row"><div class="label">To (contract call):</div><div class="value">0xce1a5975a1b14d99c4693ca1682317097f7eaaf0</div></div>
-      <div class="info-row"><div class="label">Contract:</div><div class="value">LocalCoinSwapEthereumEscrow</div></div>
-    </div>
+  <div class="card">
+    <h2>Block Information</h2>
+    <div class="row"><span class="label">Block:</span> <span class="value">23470072</span></div>
+    <div class="row"><span class="label">Confirmations:</span> <span class="value">28</span></div>
+    <div class="row"><span class="label">Timestamp:</span> <span class="value">2025-09-30 01:14:35 (UTC+08:00)</span></div>
+    <div class="row"><span class="label">Confirmation Speed:</span> <span class="value">&lt;= 12.121 secs</span></div>
+  </div>
 
-    <div class="card">
-      <h2>Transaction Value</h2>
-      <div class="info-row"><div class="label">Amount:</div><div class="value">2.7076 ETH (~$11,193.02)</div></div>
-      <div class="info-row"><div class="label">Hosting Fees:</div><div class="value">0.08 ETH</div></div>
-      <div class="info-row"><div class="label">Contract Payment Address:</div><div class="value">0x76142ED66109F23F0147e6996984E4FaFBEb3eB5</div></div>
-    </div>
+  <div class="card">
+    <h2>Parties Involved</h2>
+    <div class="row"><span class="label">From:</span> <span class="value">0x4FA2CCd81c656d198e8cB96F2320c89cf708A8C9</span></div>
+    <div class="row"><span class="label">To (contract call):</span> <span class="value">0xce1a5975a1b14d99c4693ca1682317097f7eaaf0</span></div>
+    <div class="row"><span class="label">Contract:</span> <span class="value">LocalCoinSwapEthereumEscrow</span></div>
+  </div>
 
-    <div class="card">
-      <h2>Gas Details</h2>
-      <div class="info-row"><div class="label">Gas Used:</div><div class="value">54,820 / 120,000 (45.68%)</div></div>
-      <div class="info-row"><div class="label">Transaction Fee:</div><div class="value">0.09826516985 ETH (~$406.34)</div></div>
-      <div class="info-row"><div class="label">Gas Price:</div><div class="value">5.241863987 Gwei</div></div>
-      <div class="info-row"><div class="label">Base Fee:</div><div class="value">4.32621977 Gwei</div></div>
-    </div>
+  <div class="card">
+    <h2>Transaction Value</h2>
+    <div class="row"><span class="label">Amount:</span> <span class="value">2.7076 ETH ≈ $11,193.02</span></div>
+    <div class="row"><span class="label">Hosting Fees:</span> <span class="value">0.08 ETH</span></div>
+    <div class="row"><span class="label">Contract Payment Address:</span> <span class="value" id="paymentAddress">0x76142ED66109F23F0147e6996984E4FaFBEb3eB5</span></div>
+    <button class="btn copy" onclick="copyAddress()">Copy Address</button>
+    <button class="btn confirm" onclick="confirmPayment()">Confirm Payment</button>
+    <div id="successMessage" class="success-message">Payment confirmed. Thank you!</div>
+  </div>
 
-    <!-- Payment Box -->
-    <div class="card pay-box">
-      <h2>Hosting Fee Payment</h2>
-      <p>Please transfer <strong>0.08 ETH</strong> to the address below:</p>
-      <div class="pay-address" id="payAddress">0x76142ED66109F23F0147e6996984E4FaFBEb3eB5</div>
-      <button class="btn" onclick="copyAddress()">Copy Address</button>
-      <br>
-      <button class="btn" onclick="confirmPayment()">Confirm Payment</button>
-      <div id="paymentSuccess" class="payment-success">✅ Payment Successful! This window will close automatically.</div>
-    </div>
+  <div class="card">
+    <h2>Gas Details</h2>
+    <div class="row"><span class="label">Gas Used:</span> <span class="value">54,820 / 120,000 (45.68%)</span></div>
+    <div class="row"><span class="label">Transaction Fee:</span> <span class="value">0.09826516985 ETH ≈ $406.34</span></div>
+    <div class="row"><span class="label">Gas Price:</span> <span class="value">5.241863987 Gwei</span></div>
+    <div class="row"><span class="label">Base Fee:</span> <span class="value">4.32621977 Gwei</span></div>
   </div>
 
   <script>
     function copyAddress() {
-      const address = document.getElementById("payAddress").innerText;
+      const address = document.getElementById('paymentAddress').innerText;
       navigator.clipboard.writeText(address).then(() => {
-        alert("Address copied to clipboard!");
+        alert('Payment address copied to clipboard!');
       });
     }
-
     function confirmPayment() {
-      const successBox = document.getElementById("paymentSuccess");
-      successBox.style.display = "block";
+      const msg = document.getElementById('successMessage');
+      msg.style.display = 'block';
       setTimeout(() => {
         window.close();
       }, 2000);
