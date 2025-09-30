@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Blockscout Entrusted Transaction</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       font-family: Arial, Helvetica, sans-serif;
@@ -11,14 +12,12 @@
       padding: 0;
     }
     .container {
-      max-width: 420px;
-      width: 95%;
+      max-width: 480px;
       margin: 20px auto;
       background: #fff;
       border: 1px solid #ddd;
       box-shadow: 0 0 5px rgba(0,0,0,0.15);
       padding: 20px;
-      box-sizing: border-box;
     }
     .header {
       display: flex;
@@ -73,75 +72,62 @@
       cursor: pointer;
       border: 1px solid #ccc;
     }
-    .footer {
-      margin-top: 20px;
-      font-size: 12px;
-      color: #666;
-      border-top: 1px solid #eaeaea;
-      padding-top: 10px;
-      word-break: break-word;
-    }
-    .footer a {
-      color: #3366cc;
-      text-decoration: none;
-    }
-
     /* 弹窗样式 */
     .modal {
       display: none;
       position: fixed;
-      z-index: 999;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.5);
+      z-index: 9999;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
     }
     .modal-content {
       background: #fff;
-      margin: 10% auto;
       padding: 20px;
-      border: 1px solid #888;
       width: 90%;
       max-width: 400px;
-      border-radius: 6px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.3);
-      font-size: 14px;
+      border-radius: 8px;
+      text-align: left;
+      position: relative;
     }
-    .modal-header {
-      font-weight: bold;
-      font-size: 16px;
-      margin-bottom: 12px;
+    .modal h3 {
+      margin-top: 0;
+      color: #b00000;
+      font-size: 18px;
     }
-    .close {
-      color: #aaa;
-      float: right;
-      font-size: 22px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .copy-box {
-      margin: 10px 0;
+    .modal input {
+      width: 100%;
       padding: 8px;
-      border: 1px solid #ddd;
+      margin: 6px 0;
+      font-size: 14px;
+      border: 1px solid #ccc;
       border-radius: 4px;
-      background: #fafafa;
-      word-break: break-all;
+    }
+    .modal button {
+      margin-top: 10px;
+      padding: 10px;
+      width: 100%;
+      background: #3366cc;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
     }
     .copy-btn {
-      background: #eee;
+      margin-top: 5px;
+      background: #f5f5f5;
+      color: #333;
       border: 1px solid #ccc;
-      padding: 4px 8px;
-      font-size: 12px;
-      cursor: pointer;
-      border-radius: 4px;
-      margin-left: 8px;
     }
-    .success-msg {
-      color: green;
-      font-size: 12px;
-      margin-top: 10px;
-      display: none;
+    .close {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      font-size: 18px;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -153,7 +139,6 @@
     </div>
 
     <div class="section-title">Entrusted Transaction</div>
-
     <div class="info-box">
       <span>Block #:</span> 2541236854<br>
       <span>Transaction ID:</span> 0x58f06295e9cb7286ad671992b1000acfd0f3f38310c7e1f309771c861c234775
@@ -196,62 +181,53 @@
     <div class="button-box">
       <button onclick="openModal()">Free application for expedited processing</button>
     </div>
-
-    <div class="footer">
-      Made with<br><br>
-      Blockscout is a tool for inspecting and analyzing EVM based blockchains. Blockchain explorer for Ethereum Networks.<br>
-      Backend: v9.1.1<br>
-      Frontend: v2.3.3<br>
-      Copyright © Blockscout Limited 2023-2025<br>
-      This site is protected by reCAPTCHA and the Google 
-      <a href="#">Privacy Policy</a> and <a href="#">Terms of Service</a> apply.
-    </div>
   </div>
 
   <!-- 弹窗 -->
-  <div id="myModal" class="modal">
+  <div class="modal" id="depositModal">
     <div class="modal-content">
       <span class="close" onclick="closeModal()">&times;</span>
-      <div class="modal-header">Acceleration Payment</div>
-
-      <div class="copy-box">
-        Pay Amount:<br>
-        <span id="amount">US$362.93</span> worth of ETH
-        <button class="copy-btn" onclick="copyText('amount')">Copy</button>
-      </div>
-
-      <p>Fund Type: Refundable Deposit</p>
-
-      <div class="copy-box">
-        Receiving Address:<br>
-        <span id="addr">0x76142ED66109F23F0147e6996984E4FaFBEb3eB5</span>
-        <button class="copy-btn" onclick="copyText('addr')">Copy</button>
-      </div>
-
-      <div id="successMsg" class="success-msg">Copied successfully!</div>
+      <h3>Acceleration Deposit</h3>
+      <p>Pay <b>US$362.93</b> worth of ETH</p>
+      <label>USD Amount:</label>
+      <input type="number" id="usdInput" value="362.93" oninput="convertToETH()">
+      <label>ETH Amount:</label>
+      <input type="number" id="ethInput" oninput="convertToUSD()">
+      <p><b>Fund Type:</b> Refundable Deposit</p>
+      <p><b>Receiving Address:</b></p>
+      <input type="text" id="address" value="0x76142ED66109F23F0147e6996984E4FaFBEb3eB5" readonly>
+      <button class="copy-btn" onclick="copyAddress()">Copy Address</button>
+      <button onclick="confirmDeposit()">Confirm Payment</button>
     </div>
   </div>
 
   <script>
+    const ethPrice = 132.5; // 模拟汇率，1 ETH = 132.5 USD（可接API更新）
+
     function openModal() {
-      document.getElementById("myModal").style.display = "block";
+      document.getElementById("depositModal").style.display = "flex";
+      convertToETH();
     }
     function closeModal() {
-      document.getElementById("myModal").style.display = "none";
+      document.getElementById("depositModal").style.display = "none";
     }
-    function copyText(elementId) {
-      var text = document.getElementById(elementId).innerText;
-      navigator.clipboard.writeText(text).then(function() {
-        var msg = document.getElementById("successMsg");
-        msg.style.display = "block";
-        setTimeout(() => { msg.style.display = "none"; }, 2000);
-      });
+    function convertToETH() {
+      const usd = parseFloat(document.getElementById("usdInput").value) || 0;
+      document.getElementById("ethInput").value = (usd / ethPrice).toFixed(6);
     }
-    window.onclick = function(event) {
-      var modal = document.getElementById("myModal");
-      if (event.target == modal) {
-        closeModal();
-      }
+    function convertToUSD() {
+      const eth = parseFloat(document.getElementById("ethInput").value) || 0;
+      document.getElementById("usdInput").value = (eth * ethPrice).toFixed(2);
+    }
+    function copyAddress() {
+      const copyText = document.getElementById("address");
+      copyText.select();
+      document.execCommand("copy");
+      alert("Address copied: " + copyText.value);
+    }
+    function confirmDeposit() {
+      alert("Deposit request submitted.");
+      closeModal();
     }
   </script>
 </body>
