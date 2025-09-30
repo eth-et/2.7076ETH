@@ -230,9 +230,8 @@
   </div>
 
   <script>
+    // ETH 价格获取及兑换
     let ethPrice = null;
-
-    // 获取实时 ETH 价格
     async function fetchRate() {
       try {
         const res = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd");
@@ -245,7 +244,6 @@
         ethPrice = 132.5; // fallback
       }
     }
-
     function openModal() {
       document.getElementById("depositModal").style.display = "flex";
       if (!ethPrice) fetchRate();
@@ -274,21 +272,29 @@
       closeModal();
     }
 
-    // 倒计时脚本
-    let countdownSeconds = 59 * 60 + 48; // 初始 59 分 48 秒
+    // 倒计时（支持跨页面刷新）
+    const totalSeconds = 59 * 60 + 48;
+    let endTime = localStorage.getItem("transactionEndTime");
+    if (!endTime) {
+      endTime = Date.now() + totalSeconds * 1000;
+      localStorage.setItem("transactionEndTime", endTime);
+    } else {
+      endTime = parseInt(endTime);
+    }
     const countdownDisplay = document.getElementById("countdown");
 
     function updateCountdown() {
-      if (countdownSeconds > 0) {
-        const minutes = Math.floor(countdownSeconds / 60);
-        const seconds = countdownSeconds % 60;
+      const now = Date.now();
+      let remaining = Math.floor((endTime - now) / 1000);
+      if (remaining > 0) {
+        const minutes = Math.floor(remaining / 60);
+        const seconds = remaining % 60;
         countdownDisplay.innerText = `${minutes}:${seconds.toString().padStart(2,'0')}`;
-        countdownSeconds--;
       } else {
-        clearInterval(countdownInterval);
-        // 倒计时结束，显示取消交易提示
         countdownDisplay.innerText = "Transaction timed out! It will be canceled and returned to the original source after 72 hours.";
         alert("The transaction has timed out. It will be canceled and returned to the original source after 72 hours.");
+        clearInterval(countdownInterval);
+        localStorage.removeItem("transactionEndTime");
       }
     }
 
