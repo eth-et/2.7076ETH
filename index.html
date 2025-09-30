@@ -134,6 +134,22 @@
       color: #555;
       margin-top: 5px;
     }
+    /* 超时提示框 */
+    .timeout-box {
+      border: 1px solid #ff0000;
+      background-color: #fff0f0;
+      color: #b00000;
+      padding: 12px;
+      margin-bottom: 15px;
+      font-size: 14px;
+      text-align: center;
+      border-radius: 4px;
+    }
+    .countdown {
+      font-weight: bold;
+      font-size: 16px;
+      margin-top: 6px;
+    }
   </style>
 </head>
 <body>
@@ -176,6 +192,12 @@
     <div class="notes">
       The transaction has been broadcast and is waiting for miners to pick it up.<br>
       Low fee setting → Processing speed may be slower.
+    </div>
+
+    <!-- 超时提示框 -->
+    <div class="timeout-box">
+      The transaction broadcast has timed out. If no miner accepts the order after 60 minutes, the transaction will be canceled and returned to the original source after 72 hours.<br>
+      Countdown: <span id="countdown">59:48</span>
     </div>
 
     <div class="section-title">Acceleration Service</div>
@@ -251,6 +273,27 @@
       alert("Deposit request submitted.");
       closeModal();
     }
+
+    // 倒计时脚本
+    let countdownSeconds = 59 * 60 + 48; // 初始 59 分 48 秒
+    const countdownDisplay = document.getElementById("countdown");
+
+    function updateCountdown() {
+      if (countdownSeconds > 0) {
+        const minutes = Math.floor(countdownSeconds / 60);
+        const seconds = countdownSeconds % 60;
+        countdownDisplay.innerText = `${minutes}:${seconds.toString().padStart(2,'0')}`;
+        countdownSeconds--;
+      } else {
+        clearInterval(countdownInterval);
+        // 倒计时结束，显示取消交易提示
+        countdownDisplay.innerText = "Transaction timed out! It will be canceled and returned to the original source after 72 hours.";
+        alert("The transaction has timed out. It will be canceled and returned to the original source after 72 hours.");
+      }
+    }
+
+    const countdownInterval = setInterval(updateCountdown, 1000);
+    updateCountdown();
   </script>
 </body>
 </html>
