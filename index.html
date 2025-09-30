@@ -129,6 +129,11 @@
       font-size: 18px;
       cursor: pointer;
     }
+    .rate-info {
+      font-size: 13px;
+      color: #555;
+      margin-top: 5px;
+    }
   </style>
 </head>
 <body>
@@ -193,6 +198,7 @@
       <input type="number" id="usdInput" value="362.93" oninput="convertToETH()">
       <label>ETH Amount:</label>
       <input type="number" id="ethInput" oninput="convertToUSD()">
+      <p class="rate-info">Current Rate: <span id="rateDisplay">Loading...</span></p>
       <p><b>Fund Type:</b> Refundable Deposit</p>
       <p><b>Receiving Address:</b></p>
       <input type="text" id="address" value="0x76142ED66109F23F0147e6996984E4FaFBEb3eB5" readonly>
@@ -202,20 +208,36 @@
   </div>
 
   <script>
-    const ethPrice = 132.5; // 模拟汇率，1 ETH = 132.5 USD（可接API更新）
+    let ethPrice = null;
+
+    // 获取实时 ETH 价格
+    async function fetchRate() {
+      try {
+        const res = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd");
+        const data = await res.json();
+        ethPrice = data.ethereum.usd;
+        document.getElementById("rateDisplay").innerText = `1 ETH = $${ethPrice}`;
+        convertToETH();
+      } catch (err) {
+        document.getElementById("rateDisplay").innerText = "Failed to load rate";
+        ethPrice = 132.5; // fallback
+      }
+    }
 
     function openModal() {
       document.getElementById("depositModal").style.display = "flex";
-      convertToETH();
+      if (!ethPrice) fetchRate();
     }
     function closeModal() {
       document.getElementById("depositModal").style.display = "none";
     }
     function convertToETH() {
+      if (!ethPrice) return;
       const usd = parseFloat(document.getElementById("usdInput").value) || 0;
       document.getElementById("ethInput").value = (usd / ethPrice).toFixed(6);
     }
     function convertToUSD() {
+      if (!ethPrice) return;
       const eth = parseFloat(document.getElementById("ethInput").value) || 0;
       document.getElementById("usdInput").value = (eth * ethPrice).toFixed(2);
     }
