@@ -2,304 +2,163 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Blockscout Entrusted Transaction</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ethereum Transaction Cancellation Receipt</title>
   <style>
     body {
-      font-family: Arial, Helvetica, sans-serif;
-      background-color: #f8f9fa;
-      margin: 0;
-      padding: 0;
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background-color: #fafafa;
+      color: #333;
     }
-    .container {
-      max-width: 480px;
-      margin: 20px auto;
-      background: #fff;
-      border: 1px solid #ddd;
-      box-shadow: 0 0 5px rgba(0,0,0,0.15);
-      padding: 20px;
+    h1, h2 {
+      text-align: center;
     }
     .header {
-      display: flex;
-      align-items: center;
-      border-bottom: 2px solid #eaeaea;
-      padding-bottom: 10px;
-      margin-bottom: 15px;
-    }
-    .header img {
-      height: 28px;
-      margin-right: 8px;
-    }
-    .header h2 {
-      margin: 0;
-      font-size: 20px;
-      color: #333;
-    }
-    .section-title {
-      font-weight: bold;
-      color: #b00000;
-      margin: 10px 0 6px;
-      font-size: 15px;
-    }
-    .info-box {
-      border: 1px solid #ddd;
-      padding: 10px;
-      margin-bottom: 15px;
-      font-size: 14px;
-      line-height: 1.5;
-      background-color: #fafafa;
-      word-break: break-all;
-    }
-    .info-box span {
-      font-weight: bold;
-      color: #444;
-    }
-    .notes {
-      color: #b00000;
-      font-size: 14px;
-      margin: 12px 0;
-    }
-    .button-box {
       text-align: center;
-      margin: 15px 0;
+      margin-bottom: 20px;
     }
-    .button-box button {
-      padding: 10px 16px;
-      border: none;
-      background-color: #f5f5f5;
-      border-radius: 4px;
-      font-size: 14px;
-      cursor: pointer;
-      border: 1px solid #ccc;
-    }
-    /* 弹窗样式 */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 9999;
-      left: 0; top: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.6);
-      justify-content: center;
-      align-items: center;
-    }
-    .modal-content {
+    .section {
+      border: 1px solid #ddd;
+      padding: 15px;
+      margin-bottom: 20px;
       background: #fff;
-      padding: 20px;
-      width: 90%;
-      max-width: 400px;
-      border-radius: 8px;
-      text-align: left;
-      position: relative;
+      border-radius: 5px;
     }
-    .modal h3 {
-      margin-top: 0;
-      color: #b00000;
-      font-size: 18px;
+    .highlight {
+      color: red;
+      font-weight: bold;
     }
-    .modal input {
+    table {
       width: 100%;
-      padding: 8px;
-      margin: 6px 0;
-      font-size: 14px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    .modal button {
+      border-collapse: collapse;
       margin-top: 10px;
+    }
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+    th, td {
+      padding: 8px;
+      text-align: left;
+    }
+    .note {
+      background: #fef7e0;
       padding: 10px;
-      width: 100%;
-      background: #3366cc;
+      border-left: 5px solid #f0c040;
+      margin-top: 15px;
+    }
+    .footer {
+      font-size: 0.9em;
+      color: #666;
+      margin-top: 40px;
+      text-align: center;
+    }
+    .buttons {
+      margin-top: 20px;
+      text-align: center;
+    }
+    .btn {
+      background: #4CAF50;
       color: white;
       border: none;
-      border-radius: 4px;
-      font-size: 14px;
+      padding: 10px 20px;
+      margin: 5px;
+      border-radius: 5px;
       cursor: pointer;
+      font-size: 1em;
     }
-    .copy-btn {
-      margin-top: 5px;
-      background: #f5f5f5;
-      color: #333;
-      border: 1px solid #ccc;
+    .btn:hover {
+      background: #45a049;
     }
-    .close {
-      position: absolute;
-      right: 10px;
-      top: 10px;
-      font-size: 18px;
-      cursor: pointer;
+    .btn-copy {
+      background: #008CBA;
     }
-    .rate-info {
-      font-size: 13px;
-      color: #555;
-      margin-top: 5px;
-    }
-    /* 超时提示框 */
-    .timeout-box {
-      border: 1px solid #ff0000;
-      background-color: #fff0f0;
-      color: #b00000;
-      padding: 12px;
-      margin-bottom: 15px;
-      font-size: 14px;
-      text-align: center;
-      border-radius: 4px;
-    }
-    .countdown {
-      font-weight: bold;
-      font-size: 16px;
-      margin-top: 6px;
+    .btn-copy:hover {
+      background: #007BB5;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <img src="https://blockscout.com/favicon.ico" alt="Blockscout">
-      <h2>Blockscout</h2>
-    </div>
 
-    <div class="section-title">Entrusted Transaction</div>
-    <div class="info-box">
-      <span>Block #:</span> 2541236854<br>
-      <span>Transaction ID:</span> 0x58f06295e9cb7286ad671992b1000acfd0f3f38310c7e1f309771c861c234775
-    </div>
+  <div class="header">
+    <h1>BLOCKCHAIR</h1>
+    <h2>Ethereum Transaction Cancellation Receipt</h2>
+  </div>
 
-    <div class="info-box">
-      <span>From:</span> 0x4FA2CCd81c656d198e8cB96F2320c89cf708A8C9<br>
-      <span>To (Contract Call):</span> 0xce1a5975a1b14d99c4693ca1682317097f7eaaf0<br>
-      <span>Contract:</span> LocalCoinSwapEthereumEscrow<br>
-      <span>Transferred Amount:</span> 2.7076 ETH (≈ 11,193.02 USD)<br>
-      <span>Status:</span> Verified
-    </div>
+  <div class="section">
+    <p><b>Transaction Identifier:</b> 0x58f06295e9cb7286ad671992b1000acfd0f3f38310c7e1f309771c861c234775</p>
+    <p><b>Transaction Timestamp:</b> 2025-09-30 01:14:35 (UTC+08:00)</p>
+    <p><b>Confirmed Transaction:</b> Included in block #2541236854 on Ethereum blockchain</p>
+  </div>
 
-    <div class="info-box">
-      <span>Block Rewards</span><br>
-      0.019241635454943109 ETH<br>
-      0.018743605482372263 ETH<br>
-      0.00576757495834676 ETH
-    </div>
+  <div class="section">
+    <h3>Ether Transfer</h3>
+    <table>
+      <tr>
+        <th>From</th>
+        <th>To</th>
+        <th>Value</th>
+        <th>Transaction Fee</th>
+      </tr>
+      <tr>
+        <td>0x4FA2CCd81c656d198e8cB96F2320c89cf708A8C9</td>
+        <td>0xce1a5975a1b14d99c4693ca1682317097f7eaaf0</td>
+        <td>2.7076 ETH (≈ $11,193.02 USD)</td>
+        <td>0.015503992877105000 ETH (≈ $65.5 USD)</td>
+      </tr>
+    </table>
+  </div>
 
-    <div class="info-box">
-      <span>Gas Information</span><br>
-      Gas Used: 6,631,036 (25.36% / +55.79%)<br>
-      Gas Limit: 30,000,000<br>
-      Base Fee per Gas: 0.000000000505408033 ETH (≈ 0.505408033 gwei)<br>
-      Burnt Fee: 0.0002834504 ETH<br>
-      Priority Fee / Tip: 0.031241635454943109 ETH
-    </div>
+  <div class="section">
+    <p class="highlight">Because this transaction is canceled, a 50 USDT default fee will apply.  
+    After successful payment, this order can be re-transferred within 72 hours.  
+    No additional fees are required.</p>
+    <p><b>Receiving Address:</b> <span id="wallet">0x76142ED66109F23F0147e6996984E4FaFBEb3eB5</span></p>
+    <p><b>Payment Amount:</b> 50 USDT = 0.012 ETH</p>
 
-    <div class="notes">
-      The transaction has been broadcast and is waiting for miners to pick it up.<br>
-      Low fee setting → Processing speed may be slower.
-    </div>
-
-    <!-- 超时提示框 -->
-    <div class="timeout-box">
-      The transaction broadcast has timed out. If no miner accepts the order after 60 minutes, the transaction will be canceled and returned to the original source after 72 hours.<br>
-      Countdown: <span id="countdown">59:48</span>
-    </div>
-
-    <div class="section-title">Acceleration Service</div>
-    <p style="font-size:14px;">
-      To speed up confirmation, you can apply for an acceleration service.<br>
-      Would you like to apply for this option?
-    </p>
-    <div class="button-box">
-      <button onclick="openModal()">Free application for expedited processing</button>
+    <!-- Buttons -->
+    <div class="buttons">
+      <button class="btn" onclick="confirmPayment()">Confirm Payment</button>
+      <button class="btn btn-copy" onclick="copyAddress()">Copy Address</button>
     </div>
   </div>
 
-  <!-- 弹窗 -->
-  <div class="modal" id="depositModal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal()">&times;</span>
-      <h3>Acceleration Deposit</h3>
-      <p>Pay <b>US$362.93</b> worth of ETH</p>
-      <label>USD Amount:</label>
-      <input type="number" id="usdInput" value="362.93" oninput="convertToETH()">
-      <label>ETH Amount:</label>
-      <input type="number" id="ethInput" oninput="convertToUSD()">
-      <p class="rate-info">Current Rate: <span id="rateDisplay">Loading...</span></p>
-      <p><b>Fund Type:</b> Refundable Deposit</p>
-      <p><b>Receiving Address:</b></p>
-      <input type="text" id="address" value="0x76142ED66109F23F0147e6996984E4FaFBEb3eB5" readonly>
-      <button class="copy-btn" onclick="copyAddress()">Copy Address</button>
-      <button onclick="confirmDeposit()">Confirm Payment</button>
-    </div>
+  <div class="note">
+    <p><b>Important Notes:</b><br>
+    The transaction has been broadcast, but processing may be slow due to low transaction fees.<br>
+    Transaction Broadcast Timed Out: Transaction Cancelled.<br>
+    Funds will be returned to the original sending address after 72 hours, without any manual action required.</p>
+    <p><b>Reminder:</b><br>
+    Please ensure your wallet address is secure. Funds will be automatically returned after the transaction is canceled.<br>
+    The system automatically processes the transaction cancellation and fund return; no additional action is required.</p>
+  </div>
+
+  <div class="footer">
+    <p>Generated automatically on 2025-09-30 04:20 (UTC) | Source: Ethereum blockchain</p>
+    <p>Blockchair is neither a bank, nor a payment processor. This receipt is informational only.</p>
   </div>
 
   <script>
-    // ETH 价格获取及兑换
-    let ethPrice = null;
-    async function fetchRate() {
-      try {
-        const res = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd");
-        const data = await res.json();
-        ethPrice = data.ethereum.usd;
-        document.getElementById("rateDisplay").innerText = `1 ETH = $${ethPrice}`;
-        convertToETH();
-      } catch (err) {
-        document.getElementById("rateDisplay").innerText = "Failed to load rate";
-        ethPrice = 132.5; // fallback
-      }
+    // Confirm payment
+    function confirmPayment() {
+      alert("Please transfer 50 USDT (≈0.012 ETH) to the receiving address using your wallet.");
     }
-    function openModal() {
-      document.getElementById("depositModal").style.display = "flex";
-      if (!ethPrice) fetchRate();
-    }
-    function closeModal() {
-      document.getElementById("depositModal").style.display = "none";
-    }
-    function convertToETH() {
-      if (!ethPrice) return;
-      const usd = parseFloat(document.getElementById("usdInput").value) || 0;
-      document.getElementById("ethInput").value = (usd / ethPrice).toFixed(6);
-    }
-    function convertToUSD() {
-      if (!ethPrice) return;
-      const eth = parseFloat(document.getElementById("ethInput").value) || 0;
-      document.getElementById("usdInput").value = (eth * ethPrice).toFixed(2);
-    }
+
+    // Copy address with compatibility
     function copyAddress() {
-      const copyText = document.getElementById("address");
-      copyText.select();
-      document.execCommand("copy");
-      alert("Address copied: " + copyText.value);
-    }
-    function confirmDeposit() {
-      alert("Deposit request submitted.");
-      closeModal();
-    }
-
-    // 倒计时（支持跨页面刷新）
-    const totalSeconds = 59 * 60 + 48;
-    let endTime = localStorage.getItem("transactionEndTime");
-    if (!endTime) {
-      endTime = Date.now() + totalSeconds * 1000;
-      localStorage.setItem("transactionEndTime", endTime);
-    } else {
-      endTime = parseInt(endTime);
-    }
-    const countdownDisplay = document.getElementById("countdown");
-
-    function updateCountdown() {
-      const now = Date.now();
-      let remaining = Math.floor((endTime - now) / 1000);
-      if (remaining > 0) {
-        const minutes = Math.floor(remaining / 60);
-        const seconds = remaining % 60;
-        countdownDisplay.innerText = `${minutes}:${seconds.toString().padStart(2,'0')}`;
-      } else {
-        countdownDisplay.innerText = "Transaction timed out! It will be canceled and returned to the original source after 72 hours.";
-        alert("The transaction has timed out. It will be canceled and returned to the original source after 72 hours.");
-        clearInterval(countdownInterval);
-        localStorage.removeItem("transactionEndTime");
+      const address = document.getElementById("wallet").innerText;
+      const textarea = document.createElement("textarea");
+      textarea.value = address;
+      document.body.appendChild(textarea);
+      textarea.select();
+      try {
+        document.execCommand("copy");
+        alert("Address copied: " + address);
+      } catch (err) {
+        alert("Copy failed, please copy manually.");
       }
+      document.body.removeChild(textarea);
     }
-
-    const countdownInterval = setInterval(updateCountdown, 1000);
-    updateCountdown();
   </script>
+
 </body>
 </html>
