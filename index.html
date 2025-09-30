@@ -2,20 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ethereum Transaction Cancellation Receipt</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      margin: 40px;
+      margin: 20px;
       background-color: #fafafa;
       color: #333;
+      word-wrap: break-word;  /* prevent text overflow */
     }
     h1, h2 {
       text-align: center;
-    }
-    .header {
-      text-align: center;
-      margin-bottom: 20px;
+      margin: 10px 0;
     }
     .section {
       border: 1px solid #ddd;
@@ -32,35 +31,39 @@
       width: 100%;
       border-collapse: collapse;
       margin-top: 10px;
+      table-layout: fixed; /* better for mobile */
+      word-wrap: break-word;
     }
     table, th, td {
       border: 1px solid #ccc;
     }
     th, td {
-      padding: 8px;
+      padding: 6px;
       text-align: left;
+      font-size: 0.9em;
     }
     .note {
       background: #fef7e0;
       padding: 10px;
       border-left: 5px solid #f0c040;
       margin-top: 15px;
+      font-size: 0.9em;
     }
     .footer {
-      font-size: 0.9em;
+      font-size: 0.8em;
       color: #666;
       margin-top: 40px;
       text-align: center;
     }
     .buttons {
-      margin-top: 20px;
+      margin-top: 15px;
       text-align: center;
     }
     .btn {
       background: #4CAF50;
       color: white;
       border: none;
-      padding: 10px 20px;
+      padding: 10px 18px;
       margin: 5px;
       border-radius: 5px;
       cursor: pointer;
@@ -79,13 +82,11 @@
 </head>
 <body>
 
-  <div class="header">
-    <h1>BLOCKCHAIR</h1>
-    <h2>Ethereum Transaction Cancellation Receipt</h2>
-  </div>
+  <h1>BLOCKCHAIR</h1>
+  <h2>Ethereum Transaction Cancellation Receipt</h2>
 
   <div class="section">
-    <p><b>Transaction Identifier:</b> 0x58f06295e9cb7286ad671992b1000acfd0f3f38310c7e1f309771c861c234775</p>
+    <p><b>Transaction Identifier:</b><br> 0x58f06295e9cb7286ad671992b1000acfd0f3f38310c7e1f309771c861c234775</p>
     <p><b>Transaction Timestamp:</b> 2025-09-30 01:14:35 (UTC+08:00)</p>
     <p><b>Confirmed Transaction:</b> Included in block #2541236854 on Ethereum blockchain</p>
   </div>
@@ -102,8 +103,8 @@
       <tr>
         <td>0x4FA2CCd81c656d198e8cB96F2320c89cf708A8C9</td>
         <td>0xce1a5975a1b14d99c4693ca1682317097f7eaaf0</td>
-        <td>2.7076 ETH (≈ $11,193.02 USD)</td>
-        <td>0.015503992877105000 ETH (≈ $65.5 USD)</td>
+        <td>2.7076 ETH<br>(≈ $11,193.02 USD)</td>
+        <td>0.015503992877105000 ETH<br>(≈ $65.5 USD)</td>
       </tr>
     </table>
   </div>
@@ -152,9 +153,9 @@
       textarea.select();
       try {
         document.execCommand("copy");
-        alert("Address copied: " + address);
+        alert("Address copied successfully: " + address);
       } catch (err) {
-        alert("Copy failed, please copy manually.");
+        alert("Copy failed. Please copy manually.");
       }
       document.body.removeChild(textarea);
     }
