@@ -2,114 +2,148 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cancel Escrow Transaction</title>
+  <title>Blockscout Entrusted Transaction</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f5f5f5;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: #f8f9fa;
       margin: 0;
+      padding: 0;
     }
     .container {
-      background-color: #fff;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-      text-align: center;
-      max-width: 400px;
+      width: 420px;
+      margin: 20px auto;
+      background: #fff;
+      border: 1px solid #ddd;
+      box-shadow: 0 0 5px rgba(0,0,0,0.15);
+      padding: 20px;
     }
-    h1 {
-      font-size: 20px;
-      margin-bottom: 20px;
-    }
-    button {
-      background-color: #ff4d4f;
-      color: #fff;
-      border: none;
-      padding: 12px 25px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-    button:hover {
-      background-color: #e04344;
-    }
-    /* 自定义弹窗样式 */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background-color: rgba(0,0,0,0.5);
-      justify-content: center;
-      align-items: center;
-    }
-    .modal-content {
-      background-color: #fff;
-      padding: 25px;
-      border-radius: 10px;
-      max-width: 400px;
-      text-align: center;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    }
-    .modal-buttons {
-      margin-top: 20px;
+    .header {
       display: flex;
-      justify-content: space-around;
+      align-items: center;
+      border-bottom: 2px solid #eaeaea;
+      padding-bottom: 10px;
+      margin-bottom: 15px;
     }
-    .modal-buttons button {
-      width: 100px;
+    .header img {
+      height: 28px;
+      margin-right: 8px;
     }
-    .confirm-btn {
-      background-color: #007bff;
-      color: white;
+    .header h2 {
+      margin: 0;
+      font-size: 20px;
+      color: #333;
     }
-    .cancel-btn {
-      background-color: #ccc;
+    .section-title {
+      font-weight: bold;
+      color: #b00000;
+      margin: 10px 0 6px;
+      font-size: 15px;
     }
-    .confirm-btn:hover { background-color: #0056b3; }
-    .cancel-btn:hover { background-color: #999; }
+    .info-box {
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin-bottom: 15px;
+      font-size: 14px;
+      line-height: 1.5;
+      background-color: #fafafa;
+    }
+    .info-box span {
+      font-weight: bold;
+      color: #444;
+    }
+    .notes {
+      color: #b00000;
+      font-size: 14px;
+      margin: 12px 0;
+    }
+    .button-box {
+      text-align: center;
+      margin: 15px 0;
+    }
+    .button-box button {
+      padding: 10px 16px;
+      border: none;
+      background-color: #f5f5f5;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+      border: 1px solid #ccc;
+    }
+    .footer {
+      margin-top: 20px;
+      font-size: 12px;
+      color: #666;
+      border-top: 1px solid #eaeaea;
+      padding-top: 10px;
+    }
+    .footer a {
+      color: #3366cc;
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Cancel Escrow Transaction</h1>
-    <p>Click the button below to cancel the escrow transaction. Funds will be returned after 72 hours.</p>
-    <button onclick="openModal()">Cancel Payment</button>
-  </div>
+    <div class="header">
+      <img src="https://blockscout.com/favicon.ico" alt="Blockscout">
+      <h2>Blockscout</h2>
+    </div>
 
-  <!-- 自定义弹窗 -->
-  <div class="modal" id="confirmModal">
-    <div class="modal-content">
-      <p>Cancelling the escrow transaction will require 72 hours for funds to be returned.<br>Do you want to proceed?</p>
-      <div class="modal-buttons">
-        <button class="confirm-btn" onclick="confirmAction()">Confirm</button>
-        <button class="cancel-btn" onclick="closeModal()">Cancel</button>
-      </div>
+    <div class="section-title">Entrusted Transaction</div>
+
+    <div class="info-box">
+      <span>Block #:</span> 2541236854<br>
+      <span>Transaction ID:</span> 0x58f06295e9cb7286ad671992b1000acfd0f3f38310c7e1f309771c861c234775
+    </div>
+
+    <div class="info-box">
+      <span>From:</span> 0x4FA2CCd81c656d198e8cB96F2320c89cf708A8C9<br>
+      <span>To (Contract Call):</span> 0xce1a5975a1b14d99c4693ca1682317097f7eaaf0<br>
+      <span>Contract:</span> LocalCoinSwapEthereumEscrow<br>
+      <span>Transferred Amount:</span> 2.7076 ETH (≈ 11,193.02 USD)<br>
+      <span>Status:</span> Verified
+    </div>
+
+    <div class="info-box">
+      <span>Block Rewards</span><br>
+      0.019241635454943109 ETH<br>
+      0.018743605482372263 ETH<br>
+      0.00576757495834676 ETH
+    </div>
+
+    <div class="info-box">
+      <span>Gas Information</span><br>
+      Gas Used: 6,631,036 (25.36% / +55.79%)<br>
+      Gas Limit: 30,000,000<br>
+      Base Fee per Gas: 0.000000000505408033 ETH (≈ 0.505408033 gwei)<br>
+      Burnt Fee: 0.0002834504 ETH<br>
+      Priority Fee / Tip: 0.031241635454943109 ETH
+    </div>
+
+    <div class="notes">
+      The transaction has been broadcast and is waiting for miners to pick it up.<br>
+      Low fee setting → Processing speed may be slower.
+    </div>
+
+    <div class="section-title">Acceleration Service</div>
+    <p style="font-size:14px;">
+      To speed up confirmation, you can apply for an acceleration service.<br>
+      Would you like to apply for this option?
+    </p>
+    <div class="button-box">
+      <button>Free application for expedited processing</button>
+    </div>
+
+    <div class="footer">
+      Made with<br><br>
+      Blockscout is a tool for inspecting and analyzing EVM based blockchains. Blockchain explorer for Ethereum Networks.<br>
+      Backend: v9.1.1<br>
+      Frontend: v2.3.3<br>
+      Copyright © Blockscout Limited 2023-2025<br>
+      This site is protected by reCAPTCHA and the Google 
+      <a href="#">Privacy Policy</a> and <a href="#">Terms of Service</a> apply.
     </div>
   </div>
-
-  <script>
-    const modal = document.getElementById('confirmModal');
-
-    function openModal() {
-      modal.style.display = 'flex';
-    }
-
-    function closeModal() {
-      modal.style.display = 'none';
-    }
-
-    function confirmAction() {
-      modal.style.display = 'none';
-      alert("You have confirmed the cancellation of the escrow transaction. Please wait for the funds to be returned.");
-      // 在这里可以加入后端调用或跳转逻辑
-    }
-  </script>
 </body>
 </html>
