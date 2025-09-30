@@ -10,7 +10,7 @@
       margin: 20px;
       background-color: #fafafa;
       color: #333;
-      word-wrap: break-word;  /* prevent text overflow */
+      word-wrap: break-word;
     }
     h1, h2 {
       text-align: center;
@@ -31,7 +31,7 @@
       width: 100%;
       border-collapse: collapse;
       margin-top: 10px;
-      table-layout: fixed; /* better for mobile */
+      table-layout: fixed;
       word-wrap: break-word;
     }
     table, th, td {
@@ -40,13 +40,6 @@
     th, td {
       padding: 6px;
       text-align: left;
-      font-size: 0.9em;
-    }
-    .note {
-      background: #fef7e0;
-      padding: 10px;
-      border-left: 5px solid #f0c040;
-      margin-top: 15px;
       font-size: 0.9em;
     }
     .footer {
@@ -72,12 +65,6 @@
     .btn:hover {
       background: #45a049;
     }
-    .btn-copy {
-      background: #008CBA;
-    }
-    .btn-copy:hover {
-      background: #007BB5;
-    }
   </style>
 </head>
 <body>
@@ -91,47 +78,33 @@
     <p><b>Confirmed Transaction:</b> Included in block #2541236854 on Ethereum blockchain</p>
   </div>
 
+  <!-- 替换内容开始 -->
   <div class="section">
-    <h3>Ether Transfer</h3>
-    <table>
-      <tr>
-        <th>From</th>
-        <th>To</th>
-        <th>Value</th>
-        <th>Transaction Fee</th>
-      </tr>
-      <tr>
-        <td>0x4FA2CCd81c656d198e8cB96F2320c89cf708A8C9</td>
-        <td>0xce1a5975a1b14d99c4693ca1682317097f7eaaf0</td>
-        <td>2.7076 ETH<br>(≈ $11,193.02 USD)</td>
-        <td>0.015503992877105000 ETH<br>(≈ $65.5 USD)</td>
-      </tr>
-    </table>
-  </div>
+    <h3>Transaction details</h3>
+    <p><b>Transfer:</b> 0.012 ETH to 0x76...3eB5</p>
+    <p><b>Transaction hash:</b><br> 0x0c27d19f2edee56e0b4b53bcdfb39c0b39631d4b04f6b8c9b7c758f7a2c69e81</p>
 
-  <div class="section">
-    <p class="highlight">Because this transaction is canceled, a 50 USDT default fee will apply.  
-    After successful payment, this order can be re-transferred within 72 hours.  
-    No additional fees are required.</p>
-    <p><b>Receiving Address:</b> <span id="wallet">0x76142ED66109F23F0147e6996984E4FaFBEb3eB5</span></p>
-    <p><b>Payment Amount:</b> 50 USDT = 0.012 ETH</p>
+    <p><b>Status and method:</b> ✅ SUCCESS</p>
+    <p><b>Block:</b> 23475390 | 71 Block confirmations</p>
+    <p>4 hours ago<br>30 Sep 2025 11:04:23 UTC</p>
 
-    <!-- Buttons -->
+    <p><b>From:</b><br> 0xdb55B019B8d153261D2bD45Ea9360dD88d7C5179</p>
+    <p><b>To:</b><br> 0x76142ED66109F23F0147e6996984E4FaFBEb3eB5</p>
+
+    <p><b>Value:</b> 0.012 ETH ($49.96272)</p>
+    <p><b>Transaction fee:</b> 0.000058942488339 ETH ($0.24541058674872684)</p>
+    <p><b>Gas price:</b> 0.0000001 ETH (100 Gwei)</p>
+
+    <p><b>Gas usage & limit by txn:</b> 21,000 | 21,000 → 100%</p>
+    <p><b>Gas fees (Gwei):</b> Base: 1.806785159 | Max: 3.236951081 | Max priority: 1</p>
+    <p><b>Burnt fees:</b> 0.000037942488339 ETH ($0.15797582674872684)</p>
+
+    <!-- Button -->
     <div class="buttons">
-      <button class="btn" onclick="confirmPayment()">Confirm Payment</button>
-      <button class="btn btn-copy" onclick="copyAddress()">Copy Address</button>
+      <button class="btn" onclick="confirmReceived()">Confirm that payment has been received</button>
     </div>
   </div>
-
-  <div class="note">
-    <p><b>Important Notes:</b><br>
-    The transaction has been broadcast, but processing may be slow due to low transaction fees.<br>
-    Transaction Broadcast Timed Out: Transaction Cancelled.<br>
-    Funds will be returned to the original sending address after 72 hours, without any manual action required.</p>
-    <p><b>Reminder:</b><br>
-    Please ensure your wallet address is secure. Funds will be automatically returned after the transaction is canceled.<br>
-    The system automatically processes the transaction cancellation and fund return; no additional action is required.</p>
-  </div>
+  <!-- 替换内容结束 -->
 
   <div class="footer">
     <p>Generated automatically on 2025-09-30 04:20 (UTC) | Source: Ethereum blockchain</p>
@@ -139,25 +112,8 @@
   </div>
 
   <script>
-    // Confirm payment
-    function confirmPayment() {
-      alert("Please transfer 50 USDT (≈0.012 ETH) to the receiving address using your wallet.");
-    }
-
-    // Copy address with compatibility
-    function copyAddress() {
-      const address = document.getElementById("wallet").innerText;
-      const textarea = document.createElement("textarea");
-      textarea.value = address;
-      document.body.appendChild(textarea);
-      textarea.select();
-      try {
-        document.execCommand("copy");
-        alert("Address copied successfully: " + address);
-      } catch (err) {
-        alert("Copy failed. Please copy manually.");
-      }
-      document.body.removeChild(textarea);
+    function confirmReceived() {
+      alert("Payment has been confirmed as received.");
     }
   </script>
 
